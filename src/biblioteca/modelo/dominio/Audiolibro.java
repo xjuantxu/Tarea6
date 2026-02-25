@@ -6,7 +6,7 @@ import biblioteca.modelo.dominio.Libro;
 import java.time.Duration;
 import java.util.InputMismatchException;
 
-public class Audiolibro extends Libro implements Comparable<Audiolibro> {
+public class Audiolibro extends Libro {
 
     private Duration duracion;
     private String formato;
@@ -44,6 +44,14 @@ public class Audiolibro extends Libro implements Comparable<Audiolibro> {
         this.formato = formato;
     }
 
+    private String formatearDuracion() {
+        long horas = duracion.toHours();
+        long minutos = duracion.toMinutes() % 60;
+        long segundos = duracion.getSeconds() % 60;
+
+        return String.format("%02d:%02d:%02d", horas, minutos, segundos);
+    }
+
     @Override
     public String toString() {
         return "Audiolibro{" +
@@ -51,13 +59,8 @@ public class Audiolibro extends Libro implements Comparable<Audiolibro> {
                 ", titulo='" + getTitulo() + '\'' +
                 ", anio=" + getAnio() +
                 ", categoria=" + getCategoria() +
-                ", duracion=" + duracion +
+                ", duracion=" + formatearDuracion() +
                 ", formato='" + formato + '\'' +
                 '}';
-    }
-
-    @Override
-    public int compareTo(Audiolibro objeto) {
-        return 0;
     }
 }
