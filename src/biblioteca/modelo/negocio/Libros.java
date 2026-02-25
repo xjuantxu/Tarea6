@@ -22,40 +22,29 @@ public class Libros {
     }
 
 
-    public void alta(Libro libro) {
+    public void alta(Libro libro) throws IllegalArgumentException {
         if (libro == null) {
             throw new IllegalArgumentException("El libro no puede ser nulo");
+        }
+        if (libros.contains(libro)) {
+            throw new IllegalArgumentException("El préstamo ya existe");
         }
 
         libros.add(new Libro(libro)); // copia profunda
     }
 
     public boolean baja(Libro libro) {
-        if (libro == null) {
-            return false;
-        }
-
-        Iterator<Libro> it = libros.iterator();
-        while (it.hasNext()) {
-            Libro l = it.next();
-            if (l.equals(libro)) {
-                it.remove(); // forma 100% segura
-                return true;
-            }
-        }
-
-        return false;
+        return libro != null && libros.remove(libro);
     }
 
     public Libro buscar(Libro libro) {
-        if (libro == null) {
+        if (libro == null)
             return null;
-        }
 
-        for (Libro l : libros) {
-            if (l.equals(libro)) {
-                return new Libro(l); // copia profunda
-            }
+        int index = libros.indexOf(libro);
+
+        if (index != -1) {
+            return new Libro(libros.get(index));
         }
 
         return null;
