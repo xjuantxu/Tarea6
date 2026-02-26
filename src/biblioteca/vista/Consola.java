@@ -3,6 +3,7 @@ package biblioteca.vista;
 import biblioteca.modelo.dominio.*;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 
@@ -148,74 +149,144 @@ public class Consola {
             System.out.print("ISBN: ");
             isbn = Entrada.cadena();
             try {
-                Libro prueba = new Libro(isbn, "tmp", 1, Categoria.OTROS);
+                new Libro(isbn, "tmp", 1, Categoria.OTROS);
                 break;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
-        }//Bucle que comprueba que el ISBN es correcto y lanza una excepción en caso contrario
+        }
+
         if (buscar) {
             return new Libro(isbn, "", 0, Categoria.OTROS);
         }
+
         while (true) {
             System.out.print("Título: ");
             titulo = Entrada.cadena();
             try {
-                Libro test = new Libro(isbn, titulo, 2025, Categoria.TECNICO);
-
+                new Libro(isbn, titulo, 2025, Categoria.TECNICO);
                 break;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
-        }//Bucle que comprueba que el título es correcto y lanza una excepción en caso contrario
-
-
-        while (anio <= 0) {
-            System.out.print("Año: ");
-            anio = Entrada.entero();
-            try {
-                Libro test = new Libro(isbn, titulo, anio, Categoria.TECNICO);
-                break;
-            } catch (InputMismatchException e) {
-                System.out.println("Entrada inválida. Por favor, introduce un numero entero");
-            }
-        } //Bucle que comprueba la validez del año y lanza excepción si no es válido
-
-        System.out.println("Categorías disponibles:");
-        int l = 1;
-        for (Categoria cat : Categoria.values()) {
-            System.out.println(l + ". " + cat);
-            l++;
         }
 
-        while ((entrada < 1) || (entrada > 7)) {
+        while (true) {
+            try {
+                System.out.print("Año: ");
+                anio = Entrada.entero();
+                new Libro(isbn, titulo, anio, Categoria.OTROS);
+                break;
+            } catch (Exception e) {
+                System.out.println("Entrada inválida.");
+            }
+        }
 
+        System.out.println("Categorías disponibles:");
+        int i = 1;
+        for (Categoria cat : Categoria.values()) {
+            System.out.println(i + ". " + cat);
+            i++;
+        }
+
+        while (true) {
             try {
                 System.out.print("Selecciona una categoría: ");
                 entrada = Entrada.entero();
-                if (entrada < 1 || entrada > 7) {
-                    System.out.println("Categoría no válida.");
-                } else {
-                    categoria = Categoria.values()[entrada - 1];
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Entrada inválida. Por favor. Introduce un número entero.");
+                categoria = Categoria.values()[entrada - 1];
+                break;
+            } catch (Exception e) {
+                System.out.println("Categoría no válida.");
             }
-        } //Bucle que comprueba la validez de la categoría y lanza excepción si no es válida.
+        }
 
-        Libro libro = new Libro(isbn, titulo, anio, categoria);
+        // Elegir tipo de libro
+        System.out.println("Tipo de libro:");
+        System.out.println("1. Libro físico");
+        System.out.println("2. Audiolibro");
 
-        while ((nAutores <= 0) || (nAutores > Libro.MAX_AUTORES)) {
+        int tipo = 1;
+
+        while (true) {
+            try {
+                System.out.print("Seleccione tipo: ");
+                tipo = Entrada.entero();
+                if (tipo == 1 || tipo == 2)
+                    break;
+            } catch (Exception e) {
+                // ignoramos
+            }
+            System.out.println("Tipo no válido.");
+        }
+
+        Libro libro;
+
+        if (tipo == 2) {
+
+            Duration duracion = null;
+            String formato;
+
+            while (true) {
+                try {
+                    System.out.print("Duración (HH:mm:ss): ");
+                    String tiempo = Entrada.cadena().trim();
+
+                    // Validar formato básico con regex
+                    if (!tiempo.matches("\\d{1,2}:\\d{2}:\\d{2}")) {
+                        throw new IllegalArgumentException();
+                    }
+
+                    String[] partes = tiempo.split(":");
+
+                    long horas = Long.parseLong(partes[0]);
+                    long minutos = Long.parseLong(partes[1]);
+                    long segundos = Long.parseLong(partes[2]);
+
+                    if (minutos >= 60 || segundos >= 60) {
+                        throw new IllegalArgumentException();
+                    }
+
+                    duracion = Duration.ofHours(horas)
+                            .plusMinutes(minutos)
+                            .plusSeconds(segundos);
+                    break;
+
+                } catch (Exception e) {
+                    System.out.println("Formato inválido. Usa HH:mm:ss (min y seg menores de 60).");
+                }
+            }
+
+            while (true) {
+                System.out.print("Formato (mp3, wav...): ");
+                formato = Entrada.cadena();
+                try {
+                    new Audiolibro(isbn, titulo, anio, categoria, duracion, formato);
+                    break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+
+            libro = new Audiolibro(isbn, titulo, anio, categoria, duracion, formato);
+
+        } else {
+            libro = new Libro(isbn, titulo, anio, categoria);
+        }
+
+        while (true) {
             try {
                 System.out.print("Número de autores: ");
                 nAutores = Entrada.entero();
-            } catch (InputMismatchException e) {
-                System.out.println("Entrada inválida. Por favor. Introduce un número entero.");
+                if (nAutores > 0 && nAutores <= Libro.MAX_AUTORES)
+                    break;
+            } catch (Exception e) {
+                System.out.println("Entrada inválida.");
             }
-        }//Bucle que comprueba el número de autores y lanza excepción si no es válido
+        }
 
-        for (int i = 0; i < nAutores && i < Libro.MAX_AUTORES; i++)
+        for (int j = 0; j < nAutores; j++) {
             libro.addAutor(nuevoAutor());
+        }
 
         return libro;
     }
