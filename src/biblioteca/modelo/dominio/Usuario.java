@@ -62,10 +62,10 @@ public class Usuario implements Comparable<Usuario> {
     }
 
     public void setDni(String id) {
-        if (id == null) throw new IllegalArgumentException("ID no puede ser nulo");
-        if (id.trim().isEmpty()) throw new IllegalArgumentException("ID no puede estar vacío");
-        //Verifica que el ID siga el patrón especificado y lanza una excepción si falla.
-        if (!id.matches(DNI_PATRON)) throw new IllegalArgumentException("ID inválido");
+        if (id == null) throw new IllegalArgumentException("DNI no puede ser nulo");
+        if (id.trim().isEmpty()) throw new IllegalArgumentException("DNI no puede estar vacío");
+        //Verifica que el DNI siga el patrón especificado y lanza una excepción si falla.
+        if (!id.matches(DNI_PATRON)) throw new IllegalArgumentException("DNI inválido");
 
         this.dni = dni;
     }
