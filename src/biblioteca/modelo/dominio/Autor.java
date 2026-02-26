@@ -6,7 +6,7 @@ import java.util.Objects;
  * Clase Autor.
  * Representa un autor de un libro, con nombre, apellidos y nacionalidad.
  */
-public class Autor {
+public class Autor implements Comparable<Autor> {
 
     // Atributos
     private String nombre;
@@ -32,25 +32,29 @@ public class Autor {
 
         return nombre;
     }
+
     public String getApellidos() {
         return apellidos;
     }
+
     public String getNacionalidad() {
 
         return nacionalidad;
     }
 
-    public void setNombre(String nombre) throws IllegalArgumentException{
+    public void setNombre(String nombre) throws IllegalArgumentException {
         if (nombre == null) throw new IllegalArgumentException("Nombre no puede ser nulo");
         if (nombre.trim().isEmpty()) throw new IllegalArgumentException("Nombre no puede estar vacío");
 
         this.nombre = nombre;
     }
+
     public void setApellidos(String apellidos) throws IllegalArgumentException {
         if (apellidos == null) throw new IllegalArgumentException("Apellidos no puede ser nulo");
         if (apellidos.trim().isEmpty()) throw new IllegalArgumentException("Apellidos no puede estar vacío");
         this.apellidos = apellidos;
     }
+
     public void setNacionalidad(String nacionalidad) throws IllegalArgumentException {
         if (nacionalidad == null) throw new IllegalArgumentException("Nacionalidad no puede ser nulo");
         if (nacionalidad.trim().isEmpty()) throw new IllegalArgumentException("Nacionalidad no puede estar vacío");
@@ -66,6 +70,7 @@ public class Autor {
         return Objects.equals(nombre, autor.nombre)
                 && Objects.equals(apellidos, autor.apellidos);
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(nombre, apellidos);
@@ -76,4 +81,10 @@ public class Autor {
     public String toString() {
         return nombre + " " + apellidos + " (" + nacionalidad + ")";
     }
+
+    @Override
+    public int compareTo(Autor objeto) {
+        return 0;
+    }
 }
+

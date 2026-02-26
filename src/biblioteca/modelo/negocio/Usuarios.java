@@ -21,10 +21,12 @@ public class Usuarios {
         usuarios = new ArrayList<>();
     }
 
-    public void alta(Usuario usuario) {
+    public void alta(Usuario usuario) throws IllegalArgumentException {
         if (usuario == null) {
             throw new IllegalArgumentException("El usuario no puede ser nulo");
         }
+        if (usuarios.contains(usuario))
+            throw new IllegalArgumentException("El usuario ya existe");
 
         usuarios.add(new Usuario(usuario)); // copia profunda
     }
@@ -34,14 +36,9 @@ public class Usuarios {
         if (usuario == null)
             return false;
 
-        Iterator<Usuario> it = usuarios.iterator();
-
-        while (it.hasNext()) {
-            Usuario u = it.next();
-            if (u.equals(usuario)) {
-                it.remove();
-                return true;
-            }
+        if (usuarios.contains(usuario)) {
+            usuarios.remove(usuario);
+            return true;
         }
 
         return false;

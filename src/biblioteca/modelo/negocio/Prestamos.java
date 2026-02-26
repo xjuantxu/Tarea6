@@ -24,13 +24,18 @@ public class Prestamos {
         prestamos = new ArrayList<>();
     }
 
-    public Prestamo prestar(Libro libro, Usuario usuario, LocalDate fecha) {
+    public Prestamo prestar(Libro libro, Usuario usuario, LocalDate fecha) throws IllegalArgumentException {
 
         if (libro == null || usuario == null || fecha == null) {
-            return null;
+            throw new IllegalArgumentException("Datos inválidos");
         }
 
         Prestamo nuevo = new Prestamo(libro, usuario, fecha);
+
+        if (prestamos.contains(nuevo)) {
+            throw new IllegalArgumentException("El préstamo ya existe");
+        }
+
         prestamos.add(new Prestamo(nuevo)); // copia profunda
 
         return nuevo;
@@ -38,11 +43,14 @@ public class Prestamos {
 
     public boolean devolver(Libro libro, Usuario usuario, LocalDate fecha) {
 
-        for (Prestamo p : prestamos) {
-            if (p.getLibro().equals(libro)
-                    && p.getUsuario().equals(usuario)
-                    && !p.isDevuelto()) {
+        Prestamo buscado = new Prestamo(libro, usuario, fecha);
 
+        int index = prestamos.indexOf(buscado);
+
+        if (index != -1) {
+            Prestamo p = prestamos.get(index);
+
+            if (!p.isDevuelto()) {
                 p.devolver(fecha);
                 return true;
             }

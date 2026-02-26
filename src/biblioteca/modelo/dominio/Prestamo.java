@@ -1,6 +1,7 @@
 package biblioteca.modelo.dominio;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Clase Prestamo.
@@ -63,6 +64,28 @@ public class Prestamo {
         }
     } //Metodo de devolver libro
 
+    //Overrides
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+
+        if (!(obj instanceof Prestamo))
+            return false;
+
+        Prestamo other = (Prestamo) obj;
+
+        return libro.equals(other.libro) &&
+                usuario.equals(other.usuario) &&
+                inicio.equals(other.inicio);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(libro, usuario, inicio);
+    }
+
+    //ToString
     @Override
     public String toString() {
         return "Prestamo{" +
