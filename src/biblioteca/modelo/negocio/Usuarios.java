@@ -1,6 +1,8 @@
 package biblioteca.modelo.negocio;
 
 import biblioteca.modelo.dominio.Usuario;
+
+import javax.swing.border.AbstractBorder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -58,7 +60,27 @@ public class Usuarios {
         return null;
     }
 
+    private void ordenar() {
+
+        for (int i = 0; i < usuarios.size() - 1; i++) {
+            for (int j = 0; j < usuarios.size() - i - 1; j++) {
+
+                Usuario actual = usuarios.get(j);
+                Usuario siguiente = usuarios.get(j + 1);
+
+                if (actual.compareTo(siguiente) > 0) {
+
+                    usuarios.set(j, siguiente);
+                    usuarios.set(j + 1, actual);
+                }
+            }
+        }
+    }
+
     public List<Usuario> todos() {
+
+        ordenar();
+
         List<Usuario> copia = new ArrayList<>();
 
         for (Usuario u : usuarios) {

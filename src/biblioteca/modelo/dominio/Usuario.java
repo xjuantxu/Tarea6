@@ -7,8 +7,7 @@ import java.util.Objects;
  * Contiene DNI, nombre, email y dirección.
  */
 
-public class Usuario {
-
+public class Usuario implements Comparable<Usuario> {
     // Patron para DNI y email
     public static final String DNI_PATRON = "\\d{8}[A-Z]";
     public static final String EMAIL_BASICO = ".+@.+\\..+";
@@ -102,5 +101,12 @@ public class Usuario {
     public String toString() {
         return "Usuario: " + nombre + " (" + dni + ") - " + email +
                 "\nDirección: " + direccion;
+    }
+    @Override
+    public int compareTo(Usuario usuario) {
+        if (usuario == null) {
+            throw new IllegalArgumentException("No se puede comparar con null");
+        }
+        return this.getDni().compareTo(usuario.getDni());
     }
 }

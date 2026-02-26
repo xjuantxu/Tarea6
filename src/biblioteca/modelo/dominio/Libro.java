@@ -8,7 +8,7 @@ import java.util.Objects;
  * Representa un libro de la biblioteca.
  * Contiene ISBN, título, año, categoría y autores.
  */
-public class Libro {
+public class Libro implements Comparable<Libro>{
 
     //Patrones ISBN y máximo de autores
     public static final String PATRON_ISBN = "\\d{10}|\\d[13]";
@@ -144,6 +144,14 @@ public class Libro {
                 ", categoria=" + categoria +
                 ", autores=" + Arrays.toString(autores) +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Libro libro) {
+        if (libro == null) {
+            throw new IllegalArgumentException("No se puede comparar con null");
+        }
+        return this.getISBN().compareTo(libro.getISBN());
     }
 }
 

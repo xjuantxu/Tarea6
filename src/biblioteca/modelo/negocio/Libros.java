@@ -1,6 +1,7 @@
 package biblioteca.modelo.negocio;
 
 import biblioteca.modelo.dominio.Libro;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -50,8 +51,29 @@ public class Libros {
         return null;
     }
 
+    private void ordenar() {
+
+        for (int i = 0; i < libros.size() - 1; i++) {
+            for (int j = 0; j < libros.size() - i - 1; j++) {
+
+                Libro actual = libros.get(j);
+                Libro siguiente = libros.get(j + 1);
+
+                if (actual.compareTo(siguiente) > 0) {
+
+                    libros.set(j, siguiente);
+                    libros.set(j + 1, actual);
+                }
+            }
+        }
+    }
+
     public List<Libro> todos() {
+
+        ordenar();
+
         List<Libro> copia = new ArrayList<>();
+
         for (Libro l : libros) {
             copia.add(new Libro(l));
         }
