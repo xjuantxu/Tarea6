@@ -2,10 +2,8 @@ package biblioteca.modelo.negocio;
 
 import biblioteca.modelo.dominio.Usuario;
 
-import javax.swing.border.AbstractBorder;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 /**
