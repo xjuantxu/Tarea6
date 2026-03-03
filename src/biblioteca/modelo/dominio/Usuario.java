@@ -107,6 +107,6 @@ public class Usuario implements Comparable<Usuario> {
         if (usuario == null) {
             throw new IllegalArgumentException("No se puede comparar con null");
         }
-        return this.getDni().compareTo(usuario.getDni());
+        return this.getNombre().compareToIgnoreCase(usuario.getNombre());
     }
 }

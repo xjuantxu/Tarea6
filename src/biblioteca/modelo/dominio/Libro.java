@@ -151,7 +151,7 @@ public class Libro implements Comparable<Libro>{
         if (libro == null) {
             throw new IllegalArgumentException("No se puede comparar con null");
         }
-        return this.getISBN().compareTo(libro.getISBN());
+        return this.getTitulo().compareToIgnoreCase(libro.getTitulo());
     }
 }
 

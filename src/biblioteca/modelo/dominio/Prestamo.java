@@ -8,7 +8,7 @@ import java.util.Objects;
  * Representa el préstamo de un libro a un usuario.
  * Contiene libro, usuario, fecha de inicio, fecha de fin y estado de devolución.
  */
-public class Prestamo {
+public class Prestamo implements Comparable<Prestamo> {
 
     // Atributos
     private Libro libro;
@@ -95,5 +95,20 @@ public class Prestamo {
                 ", fin=" + fin +
                 ", devuelto=" + devuelto +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Prestamo prestamo) {
+
+        // Primero por fecha (descendente)
+        int comparacionFecha = prestamo.getFinicio().compareTo(this.getFinicio());
+
+        if (comparacionFecha != 0) {
+            return comparacionFecha;
+        }
+
+        // Si la fecha es igual → ordenar por nombre del usuario
+        return this.getUsuario().getNombre()
+                .compareToIgnoreCase(prestamo.getUsuario().getNombre());
     }
 }

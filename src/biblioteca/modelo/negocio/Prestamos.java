@@ -6,6 +6,7 @@ import biblioteca.modelo.dominio.Usuario;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -61,28 +62,32 @@ public class Prestamos {
 
     public List<Prestamo> todos() {
 
-        List<Prestamo> copia = new ArrayList<>();
+        List<Prestamo> resultado = new ArrayList<>();
 
         for (Prestamo p : prestamos) {
-            copia.add(new Prestamo(p));
+            resultado.add(new Prestamo(p));
         }
 
-        return copia;
+        Collections.sort(resultado);
+
+        return resultado;
     }
 
     public List<Prestamo> todos(Usuario usuario) {
 
-        List<Prestamo> copia = new ArrayList<>();
+        List<Prestamo> resultado = new ArrayList<>();
 
         if (usuario == null)
-            return copia;
+            return resultado;
 
         for (Prestamo p : prestamos) {
             if (p.getUsuario().equals(usuario)) {
-                copia.add(new Prestamo(p));
+                resultado.add(new Prestamo(p));
             }
         }
 
-        return copia;
+        Collections.sort(resultado);
+
+        return resultado;
     }
 }
