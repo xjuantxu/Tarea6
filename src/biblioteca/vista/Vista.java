@@ -5,7 +5,6 @@ import biblioteca.modelo.dominio.*;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.InputMismatchException;
 import java.util.List;
 
@@ -41,7 +40,7 @@ public class Vista {
             try {
                 System.out.print("Elige una opción: ");
                 opcion = Entrada.entero();
-                if (opcion < 0 || opcion > 10) {
+                if (opcion < 0 && opcion > 10) {
                     System.out.println("La opción escogida no es válida. Por favor. Inténtalo de nuevo.");
                 }
                 ejecutarOpcion(opcion);
@@ -135,9 +134,6 @@ public class Vista {
     private void listarUsuarios() {
         List<Usuario> usuarios = controlador.listadoUsuarios();
 
-        // Ordenar alfabéticamente por nombre (A → Z)
-        usuarios.sort(Comparator.comparing(Usuario::getNombre));
-
         System.out.println("\n--- LISTADO DE USUARIOS ---");
 
         for (Usuario u : usuarios) {
@@ -169,11 +165,6 @@ public class Vista {
 
     private void listarLibros() {
         List<Libro> libros = controlador.listadoLibros();
-
-        // Ordenación alfabética A → Z por título
-        libros.sort(Comparator.comparing(
-                l -> l.getTitulo().toLowerCase()
-        ));
 
         System.out.println("\n--- LISTADO DE LIBROS ---");
 
@@ -246,12 +237,6 @@ public class Vista {
 
         List<Prestamo> prestamos = controlador.listadoPrestamos();
 
-        // Ordenación: fecha descendente, luego nombre de usuario A-Z
-        prestamos.sort(
-                Comparator.comparing(Prestamo::getFinicio).reversed()
-                        .thenComparing(p -> p.getUsuario().getNombre().toLowerCase())
-        );
-
         System.out.println("\n--- LISTADO DE PRÉSTAMOS ---");
 
         for (Prestamo p : prestamos) {
@@ -272,9 +257,6 @@ public class Vista {
         }
 
         List<Prestamo> prestamos = controlador.listadoPrestamos(usuario);
-
-        // Ordenar por fecha descendente
-        prestamos.sort(Comparator.comparing(Prestamo::getFinicio).reversed());
 
         System.out.println("\n--- PRÉSTAMOS DEL USUARIO ---");
 

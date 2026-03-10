@@ -5,7 +5,6 @@ import org.iesalandalus.programacion.utilidades.Entrada;
 
 import java.time.Duration;
 import java.time.LocalDate;
-import java.util.InputMismatchException;
 
 /**
  * Clase Consola: gestiona la interacción con el usuario en la biblioteca.

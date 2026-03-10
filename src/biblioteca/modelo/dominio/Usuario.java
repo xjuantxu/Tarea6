@@ -31,19 +31,13 @@ public class Usuario implements Comparable<Usuario> {
 
     // Constructor copia
     public Usuario(Usuario otro) {
-        setDni(otro.dni);
-        setNombre(otro.nombre);
-        setEmail(otro.email);
+        setDni(otro.getDni());
+        setNombre(otro.getNombre());
+        setEmail(otro.getEmail());
 
         // Copia profunda de la dirección
-        if (otro.direccion != null) {
-            this.direccion = new Direccion(
-                    otro.direccion.getVia(),
-                    otro.direccion.getNumero(),
-                    otro.direccion.getPiso(),
-                    otro.direccion.getCp(),
-                    otro.direccion.getLocalidad()
-            );
+        if (otro.getDireccion() != null) {
+            this.direccion = new Direccion(otro.getDireccion());
         }
     }
 
@@ -61,11 +55,11 @@ public class Usuario implements Comparable<Usuario> {
         return direccion;
     }
 
-    public void setDni(String id) {
-        if (id == null) throw new IllegalArgumentException("DNI no puede ser nulo");
-        if (id.trim().isEmpty()) throw new IllegalArgumentException("DNI no puede estar vacío");
+    public void setDni(String dni) {
+        if (dni == null) throw new IllegalArgumentException("DNI no puede ser nulo");
+        if (dni.trim().isEmpty()) throw new IllegalArgumentException("DNI no puede estar vacío");
         //Verifica que el DNI siga el patrón especificado y lanza una excepción si falla.
-        if (!id.matches(DNI_PATRON)) throw new IllegalArgumentException("DNI inválido");
+        if (!dni.matches(DNI_PATRON)) throw new IllegalArgumentException("DNI inválido");
 
         this.dni = dni;
     }

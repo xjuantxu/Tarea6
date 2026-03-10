@@ -1,10 +1,6 @@
 package biblioteca.modelo.dominio;
 
-import biblioteca.modelo.dominio.Categoria;
-import biblioteca.modelo.dominio.Libro;
-
 import java.time.Duration;
-import java.util.InputMismatchException;
 
 public class Audiolibro extends Libro {
 
@@ -24,10 +20,14 @@ public class Audiolibro extends Libro {
         setFormato(formato);
     }
 
+    public Audiolibro(Audiolibro otro) {
+        super(otro);
+        setDuracion(otro.getDuracion());
+        setFormato(otro.getFormato());
+    }
     public Duration getDuracion() {
         return duracion;
     }
-
     public void setDuracion(Duration duracion) throws IllegalArgumentException {
         if (duracion == null || duracion.isZero() || duracion.isNegative())
             throw new IllegalArgumentException("La duración es inválida.");
@@ -37,10 +37,9 @@ public class Audiolibro extends Libro {
     public String getFormato() {
         return formato;
     }
-
     public void setFormato(String formato) throws IllegalArgumentException {
-        if (formato == null) throw new IllegalArgumentException("Nombre no puede ser nulo");
-        if (formato.trim().isEmpty()) throw new IllegalArgumentException("Nombre no puede estar vacío");
+        if (formato == null) throw new IllegalArgumentException("Formato no puede ser nulo");
+        if (formato.trim().isEmpty()) throw new IllegalArgumentException("Formato no puede estar vacío");
         this.formato = formato;
     }
 

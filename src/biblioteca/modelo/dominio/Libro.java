@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Libro implements Comparable<Libro>{
 
     //Patrones ISBN y máximo de autores
-    public static final String PATRON_ISBN = "\\d{10}|\\d[13]";
+    public static final String PATRON_ISBN = "\\d{10}|\\d{13}";
     public static final int MAX_AUTORES = 3;
 
     // Atributos
@@ -35,10 +35,10 @@ public class Libro implements Comparable<Libro>{
 
     // Constructor Copia
     public Libro(Libro libro) {
-        setIsbn(libro.isbn);
-        setTitulo(libro.titulo);
-        setAnio(libro.anio);
-        setCategoria(libro.categoria);
+        setIsbn(libro.getISBN());
+        setTitulo(libro.getTitulo());
+        setAnio(libro.getAnio());
+        setCategoria(libro.getCategoria());
         for (Autor a : libro.getAutores()) {
             addAutor(new Autor(a));
         }

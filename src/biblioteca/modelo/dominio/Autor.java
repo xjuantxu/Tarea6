@@ -22,9 +22,9 @@ public class Autor implements Comparable<Autor> {
 
     // Constructor copia
     public Autor(Autor autor) {
-        setNombre(autor.nombre);
-        setApellidos(autor.apellidos);
-        setNacionalidad(autor.nacionalidad);
+        setNombre(autor.getNombre());
+        setApellidos(autor.getApellidos());
+        setNacionalidad(autor.getNacionalidad());
     }
 
     // Getters y setters
@@ -32,11 +32,9 @@ public class Autor implements Comparable<Autor> {
 
         return nombre;
     }
-
     public String getApellidos() {
         return apellidos;
     }
-
     public String getNacionalidad() {
 
         return nacionalidad;
@@ -48,13 +46,11 @@ public class Autor implements Comparable<Autor> {
 
         this.nombre = nombre;
     }
-
     public void setApellidos(String apellidos) throws IllegalArgumentException {
         if (apellidos == null) throw new IllegalArgumentException("Apellidos no puede ser nulo");
         if (apellidos.trim().isEmpty()) throw new IllegalArgumentException("Apellidos no puede estar vacío");
         this.apellidos = apellidos;
     }
-
     public void setNacionalidad(String nacionalidad) throws IllegalArgumentException {
         if (nacionalidad == null) throw new IllegalArgumentException("Nacionalidad no puede ser nulo");
         if (nacionalidad.trim().isEmpty()) throw new IllegalArgumentException("Nacionalidad no puede estar vacío");

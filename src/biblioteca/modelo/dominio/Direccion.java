@@ -26,12 +26,12 @@ public class Direccion {
     }
 
     // Constructor copia
-    public Direccion(Direccion direccion) {
-        setVia(direccion.via);
-        setNumero(direccion.numero);
-        setPiso(direccion.piso);
-        setCp(direccion.cp);
-        setLocalidad(direccion.localidad);
+    public Direccion(Direccion otro) {
+        setVia(otro.getVia());
+        setNumero(otro.getNumero());
+        setPiso(otro.getPiso());
+        setCp(otro.getCp());
+        setLocalidad(otro.getLocalidad());
     }
 
     // Getters y Setters

@@ -1,5 +1,6 @@
 package biblioteca.modelo.negocio;
 
+import biblioteca.modelo.dominio.Audiolibro;
 import biblioteca.modelo.dominio.Libro;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class Libros {
             throw new IllegalArgumentException("El libro no puede ser nulo");
         }
         if (libros.contains(libro)) {
-            throw new IllegalArgumentException("El préstamo ya existe");
+            throw new IllegalArgumentException("El libro ya existe");
         }
 
         libros.add(new Libro(libro)); // copia profunda
@@ -39,13 +40,21 @@ public class Libros {
     }
 
     public Libro buscar(Libro libro) {
+
         if (libro == null)
             return null;
 
         int index = libros.indexOf(libro);
 
         if (index != -1) {
-            return new Libro(libros.get(index));
+
+            Libro encontrado = libros.get(index);
+
+            if (encontrado instanceof Audiolibro) {
+                return new Audiolibro((Audiolibro) encontrado);
+            }
+
+            return new Libro(encontrado);
         }
 
         return null;
@@ -57,7 +66,13 @@ public class Libros {
         List<Libro> copia = new ArrayList<>();
 
         for (Libro l : libros) {
-            copia.add(new Libro(l));
+
+            if (l instanceof Audiolibro) {
+                copia.add(new Audiolibro((Audiolibro) l));
+            } else {
+                copia.add(new Libro(l));
+            }
+
         }
 
         Collections.sort(copia);
